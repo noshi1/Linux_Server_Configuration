@@ -5,10 +5,18 @@ This Linux server is an instance on Amazon Lightsail. This project install serve
 
 * IP address: 18.219.231.12
 * SSH port: 2200
-* URL:
+* URL: [http://ec2-18-219-231-12.us-east-2.compute.amazonaws.com](http://ec2-18-219-231-12.us-east-2.compute.amazonaws.com)
 ## SSH into server by following command
+* Move the private key file into the folder ~/.ssh (where ~ is your environment's home directory).
 ```
-ssh -i LightsailDefaultPrivateKey-us-east-2.pem ubuntu@18.219.231.12
+mv ~/Downloads/LightsailDefaultPrivateKey-us-east-2.pem ~/.ssh/
+```
+* Open your terminal and type in
+```
+chmod 600 ~/.ssh/lightsailDefaultPrivateKey-us-east-2.pem
+```
+```
+ssh -i ~/.ssh/LightsailDefaultPrivateKey-us-east-2.pem ubuntu@18.219.231.12
 ```
 ## Create user grader
 * Add new user
@@ -180,7 +188,7 @@ $ sudo chown -R grader:grader catalog
 ```
 * Clone your project from github
 ```
-$ git clone https://github.com/noshi1/catalog.git catalog
+$ git clone [https://github.com/noshi1/catalog.git](https://github.com/noshi1/catalog.git) catalog
 ```
 
 Then
@@ -249,8 +257,9 @@ $ sudo nano /etc/apache2/sites-available/catalog.conf
 Paste this code:
 ```
 <VirtualHost *:80>
-    ServerName 13.58.8.22
-    ServerAdmin admin@13.58.8.22
+    ServerName 18.219.231.12
+    ServerAlias http://ec2-18-219-231-12.us-east-2.compute.amazonaws.com
+    ServerAdmin admin@18.219.231.12
     WSGIProcessGroup catalog
     WSGIDaemonProcess catalog python-path=/var/www/catalog:/var/www/catalog/venv/lib/python2.7/site-packages
     WSGIScriptAlias / /var/www/catalog/catalog.wsgi
@@ -268,6 +277,7 @@ Paste this code:
     CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
 
+
 ```
 
 Save and close the file.
@@ -281,7 +291,7 @@ $ sudo a2ensite catalog
 ```
 $ sudo service apache2 restart
 ```
-#### Visit site at[http://18.219.231.12](http://18.219.231.12/catalog)
+#### Visit site at[http://ec2-18-219-231-12.us-east-2.compute.amazonaws.com](http://ec2-18-219-231-12.us-east-2.compute.amazonaws.com)
 
 ## Helpful links
 * [https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps)
